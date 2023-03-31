@@ -17,7 +17,7 @@ checkLogin();
         $foto = $_FILES['foto'];
         
         if (!empty($foto) AND $foto['error'] == 0) {
-            $path = './asset/';
+            $path = './media/images';
             $upload = move_uploaded_file($foto['tmp_name'], $path . $foto['name']);
     
                  // Check file size

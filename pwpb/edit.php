@@ -2,7 +2,7 @@
     include 'lib/library.php';
 
     if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-        $nis = $_POST['NIS'];
+        $nis = $_POST['nis'];
         $nama_lengkap = $_POST['nama_lengkap'];
         $jenis_kelamin = $_POST['jenis_kelamin'];
         $kelas = $_POST['kelas'];
@@ -15,7 +15,7 @@
         $foto = $_FILES['foto'];
 
 
-            if(!empty($foto) && $foto['eror'] == 0 ) {
+            if(!empty($foto) && $foto['error'] == 0 ) {
                 $path = './media/images';
                 $upload = move_uploaded_file($foto['tmp_name'], $path . $foto['name']);
 

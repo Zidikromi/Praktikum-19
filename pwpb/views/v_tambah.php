@@ -11,38 +11,68 @@
 
     <style>
 
-label {
-  display: block;
-  margin-bottom: 5px;
-  font-weight: bold;
+body {
+  font-family: sans-serif;
+  background-color: #f2f2f2;
+}
+
+form {
+  background-color: white;
+  max-width: 600px;
+  margin: auto;
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.2);
 }
 
 input[type="text"],
 select {
-  padding: 8px;
-  margin-bottom: 10px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  box-sizing: border-box;
   width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  border: none;
+  border-radius: 3px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
 }
 
 input[type="radio"] {
-  margin: 5px;
+  margin: 5px 10px 5px 0;
+}
+
+label {
+  font-weight: bold;
+  margin-top: 10px;
+}
+
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Cpath fill='%23333' d='M467.1 146.6l-9.9 9.9c-6.3 6.3-16.4 6.3-22.6 0l-54.3-54.3V344c0 8.8-7.2 16-16 16H128c-8.8 0-16-7.2-16-16V101.2L58.8 155c-6.3 6.3-16.4 6.3-22.6 0l-9.9-9.9c-6.3-6.3-6.3-16.4 0-22.6L237.3 3.4c6.3-6.3 16.4-6.3 22.6 0l221.8 221.8c6.2 6.2 6.2 16.3 0 22.6z'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 10px) center;
+  background-size: 10px;
 }
 
 input[type="submit"] {
-  background-color: #4CAF50;
+  background-color: #008CBA;
   color: white;
-  padding: 10px 15px;
   border: none;
-  border-radius: 4px;
+  border-radius: 3px;
+  padding: 10px 20px;
+  margin-top: 20px;
   cursor: pointer;
 }
 
-form {
-  width: 400px;
-  margin: 0 auto;
+input[type="file"] {
+  margin: 10px 0;
+  display: block;
+}
+
+.img-preview {
+  max-width: 200px;
+  max-height: 200px;
+  margin-top: 10px;
 }
 
     </style>
@@ -74,16 +104,30 @@ form {
         Nama Ibu Kandung <input type="text" name="ibu_kandung" value="<?= @$siswa['ibu_kandung']?>"> <br>
   
 
-        <div class="form-group">
+<div class="form-group">
   <label class="col-sm-2 control-label">Foto</label>
   <div class="col-sm-6">
-              <?php if (@$form == "edit") { ?>
-              <img src="media/images/<?= @$siswa['file']? $siswa['file']: default_picture.jpg ?>" width="50px" height="50px">
-              <input type="hidden" name="foto" value="<?= @$siswa['file']?>">
-              <?php } ?>
-              <input type="file" name="foto" accept="image/*">
+    <?php if ($action == 'edit.php') : ?>
+      <img src="media/images/<?= @$siswa['file'] ? $siswa['file'] :'default_picture.jpg' ?>" class="mb-3" width="100">
+      <input type="hidden" name="foto" value="<?= @$siswa['file'] ?>">
+    <?php endif ?>
+    <input class="form-control" type="file" name="foto" accept="image/*" onchange="previewFile(this)">
+    <img id="previewImg" src="<?php echo @$siswa['file'] ? 'media/images/'.$siswa['file'] : '' ?>" alt="Preview Image" class="mt-3" style="max-width: 200px;">
   </div>
 </div>
+
+<script>
+  function previewFile(input) {
+    var preview = document.getElementById('previewImg');
+    preview.style.display = "block";
+    var reader = new FileReader();
+    reader.onload = function() {
+      preview.src = reader.result;
+    }
+    reader.readAsDataURL(input.files[0]);
+  }
+</script>
+
 
       <br>
       <input type="submit" value="Simpan">

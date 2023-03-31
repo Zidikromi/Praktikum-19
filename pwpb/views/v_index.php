@@ -158,7 +158,7 @@ button[name="reset"]:hover {
                     <tr>
                         <td><?= $i++ ?></td>
                         <td>
-                        <img src="<?php echo base_url() ?>/media/images/<?= $siswa['file']?>" width="100px" alt="foto">                        </td>
+                        <img src="<?php echo base_url() ?>/media/images/<?= $siswa['file']?>" width="120px" height="150px" alt="foto">                        </td>
                         <td><?= $siswa['nis'] ?></td>
                         <td><?= $siswa['nama_lengkap'] ?></td>
                         <td><?= $siswa['jenis_kelamin'] ?></td>
