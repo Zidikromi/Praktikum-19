@@ -77,11 +77,11 @@ form {
         <div class="form-group">
   <label class="col-sm-2 control-label">Foto</label>
   <div class="col-sm-6">
-  <?php if ($action == 'edit') : ?>
-                        <img src="media/images/<?= @$siswa['file'] ? $siswa['file'] :'default_picture.png' ?>" class="mb-3" width="100">
-                        <input type="hidden" name="foto" value="<?= @$siswa['file'] ?>">
-                    <?php endif ?>
-    <input type="file" name="foto">
+              <?php if (@$form == "edit") { ?>
+              <img src="media/images/<?= @$siswa['file']? $siswa['file']: default_picture.jpg ?>" width="50px" height="50px">
+              <input type="hidden" name="foto" value="<?= @$siswa['file']?>">
+              <?php } ?>
+              <input type="file" name="foto" accept="image/*">
   </div>
 </div>
 
