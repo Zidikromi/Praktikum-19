@@ -9,6 +9,9 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha2/dist/js/bootstrap.bundle.min.js" integrity="sha384-qKXV1j0HvMUeCBQ+QVp7JcfGl760yU08IQ+GpUo5hlbpg51QRiuqHAJz8+BrxE/N" crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css">
 
+<!-- toast plugin -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+
     <style>
 table {
   border-collapse: collapse;
@@ -169,11 +172,73 @@ button[name="reset"]:hover {
                         <td><?= $siswa['ibu_kandung'] ?></td>
                         <td>
                           <a href="edit.php?nis=<?=$siswa['nis'] ?>"  class="btn btn-outline-warning bi bi-pencil-square me-2 mt-3" title="edit"></a>
-                          <a href="delete.php?nis=<?=$siswa['nis'] ?>"class="btn btn-outline-danger bi bi-trash3 mt-3" title="delete"></a>
+                          <a href="delete.php?nis=<?=$siswa['nis'] ?>"class="btnDelete btn btn-outline-danger bi bi-trash3 mt-3 " title="delete"></a>
                         </td>
                     </tr>
                     <?php } ?>
         </tbody>
     </table>
+    <div class="modal fade" tabindex="-1" role="dialog">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-bs-dismiss="modal" aria-label="close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title"></h4>
+          </div>
+
+          <div class="modal-body">
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary btnYa">Ya</button>
+            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Tidak</button>
+          </div>
+        </div>
+      </div>
+    </div>
+        <!-- JS BOOTSTRAP  -->
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz9ATKxIep9tiCxS/Z9fNfEXiDAYTujMAeBAsjFuCZSmKbSSUnQlmh/jp3" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js" integrity="sha384-cuYeSxntonz0PPNlHhBs68uyIAVpIIOZZ5JqeqvYYIcEL727kskC66kF92t6Xl2V" crossorigin="anonymous"></script>
+    <!-- JQUERY  -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- JS TOASTR  -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+    <script>
+      $(() => {
+        $(".btnDelete").on("click", function(e){
+          e.preventDefault();
+
+          var nama = $(this).parent().parent().children()[2];
+          nama = $(nama).html();
+
+          var tr = $(this).parent().parent();
+
+          $(".modal").modal('show');
+          $(".modal-title").html('Konfirmasi');
+          $(".modal-body").html('Anda yakin ingin menghapus data <b>' + nama + '</b> ?');
+
+          var href = $(this).attr("href");
+          $('.btnYa').off();
+          $('.btnYa').on('click', function(){
+            $.ajax({
+              'url'     : href,
+              'type'    : 'GET',
+              'success' : function(result) { 
+                if(result == 1) {
+                  $(".modal").modal('hide');
+                  tr.fadeOut();
+
+                  toastr.success('Data berhasil dihapus', 'Informasi');
+                } else {
+                                toastr.error(`Data ${nama} gagal dihapus`, 'GAGAL')
+                            }
+              }
+            })
+          })
+
+        })
+      })
+    </script>
 </body>
 </html>
